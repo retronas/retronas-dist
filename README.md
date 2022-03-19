@@ -1,24 +1,24 @@
-# Retronas Distribution Generator
-This is a companion repo to https://github.com/danmons/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box.
+# RetroNAS Distribution Generator
+This is a companion repo to https://github.com/danmons/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
 
 ### WARNING: YOU WILL LOSE ALL YOUR DATA
 
-The preseeded installer ***completely erases the first disk***. DO NOT use this on any device that could have the slightest possibility of containing data you want to retain because it will be immediately erased without asking you. ***By booting this image at all you agree to having your data erased***.
+The preseeded installer ***completely erases the first disk*** on the computer you install this to. DO NOT use this on any device that could have the slightest possibility of containing any data you want to retain because it will be immediately erased without asking you. Boot it up and look through the filesystem beforehand to make sure. ***By booting this image at all you agree to having your data erased***.
 
-This is very much based on the good work done in the repo: https://github.com/istepaniuk/debian11-preseed and the RetroNAS team would very much like to thank its creator Iván Stepaniuk (istepaniuk) for it.
+This is based on the good work done in the repo: https://github.com/istepaniuk/debian11-preseed and the RetroNAS team would very much like to thank its creator Iván Stepaniuk (istepaniuk) for it.
 
 ## Usage:
 
-### Installing RetroNAS OS:
-1. Download an ISO for your architecture from the releases.
+### Installing a RetroNAS Distribution:
+1. Download an ISO for your architecture from the releases (i386 for 32 bit and amd64 for 64 bit).
 2. Flash the ISO to a USB stick (https://www.balena.io/etcher/) or burn it to a CD. (You could also use a virtual machine)
 3. Connect the computer you wish to use to the internet with an ethernet cable.
-4. Plug the USB stick in or insert the CD.
+4. Make sure there are no files you want on the computer, then plug the USB stick in or insert the CD.
 5. Boot the computer and enter the BIOS/Boot Device Menu. This is different for each device, but usually you will be prompted to press enter, f12, or f1 during boot.
 6. Select the USB stick or CD that contains the RetroNAS ISO to boot from.
 7. Debian and RetroNAS should install now. It's possible that some intervention may be required on your part if the installer has a problem with your hardware.
 8. When the computer reboots, remove the USB stick or CD.
-9. You should now boot in to debian (if you are presented with a GRUB menu, you can press enter on the debian option)
+9. You should now boot in to debian (if you are presented with a GRUB boot menu, you can press enter on the debian option)
 10. You can login to debian with the username "pi" and password "retronas". The root password is also "retronas".
 11. Type "retronas" and press enter to run RetroNAS.
 
@@ -34,8 +34,8 @@ RetroNAS intends to maintain a release for whatever the current stable version o
 5. Run "make init" to build the docker container and perform initial setup.
 6. Open the DEBIAN_VERSION file and change it to whatever version you'd like.
 7. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
-8. Run the make command for the architecture you desire (example: "make build-amd64") or "make build-all" to build all architectures.
-9. After building, your ISO will be written to the retronas-dist directory and prepended with the name "retronas" and the date.
+8. Run the make command for the architecture you desire (example: "make build-amd64") or "make build-all" to build for all architectures.
+9. After building, your ISO(s) will be written to the retronas-dist directory and prepended with the name "retronas" and the date.
 
 ## How it works:
 
@@ -46,3 +46,6 @@ Every build command has as its dependency a download command. This just looks fo
 After the ISO is downloaded, it's unpacked into a directory called isofiles. The file "preseed.cfg" is injected into that ISO's initrd file. This file handles the installation of Debian. During the installation it always looks for a file of this name for configuration, but it usually doesn't exist so it just performs its default behavior.
 
 The directory "isofiles" is then packed back up into a new RetroNAS image that you can boot.
+
+When the ISO is booted, the debian installer finds the preseed.cfg file, which feeds it answers to all the questions that would normally require user input. At the end, it runs the "d-i preseed/late_command" from the end of the preseed.cfg file. This performs some configuration, and downloads the install_retronas.sh script from the main RetroNAS repo, then runs it. By using this method we asure that you always get the most up to date version of RetroNAS when using this ISO,
+and we don't have to create a new ISO each time RetroNAS is updated.
