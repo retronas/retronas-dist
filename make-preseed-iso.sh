@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# based on: https://github.com/istepaniuk/debian11-preseed
+
 set -e
 
 function extract_iso() {
