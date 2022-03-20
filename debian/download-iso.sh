@@ -2,7 +2,7 @@
 
 function check_for_iso {
   local EXPECTED_FILENAME="debian-$2-$1-netinst.iso"
-  for file in $(pwd)/*; do
+  for file in $(pwd)/iso-cache/*; do
       local FILENAME=$(basename $file)
       if [[ $FILENAME == $EXPECTED_FILENAME ]]; then
         export EXISTING_ISO=$FILENAME
@@ -14,7 +14,7 @@ function check_for_iso {
 function download_iso {
   URL="https://laotzu.ftp.acc.umu.se/debian-cd/current/$1/iso-cd/debian-$2-$1-netinst.iso"
   echo "Downloading from: $URL"
-  curl -O -J $URL
+  curl $URL --output iso-cache/debian-$2-$1-netinst.iso
   check_for_iso $1
   echo "Downloaded $EXISTING_ISO"
 }

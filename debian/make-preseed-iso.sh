@@ -80,7 +80,7 @@ function generate_new_iso_and_cleanup() {
 }
 
 orig_iso="$1"
-new_iso="./retronas-$(date +%F)-$(basename $orig_iso)"
+new_iso="../dists/retronas-$(date +%F)-$(basename $orig_iso)"
 arch="$3"
 extract_iso "$orig_iso"
 add_preseed_to_initrd "$arch"
