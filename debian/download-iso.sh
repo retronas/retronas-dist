@@ -12,9 +12,9 @@ function check_for_iso {
 }
 
 function download_iso {
-  URL="https://laotzu.ftp.acc.umu.se/debian-cd/current/$1/iso-cd/debian-$2-$1-netinst.iso"
+  URL="https://cdimage.debian.org/debian-cd/current/$1/iso-cd/debian-$2-$1-netinst.iso"
   echo "Downloading from: $URL"
-  curl $URL --output iso-cache/debian-$2-$1-netinst.iso
+  curl -L $URL --output iso-cache/debian-$2-$1-netinst.iso
   check_for_iso $1
   echo "Downloaded $EXISTING_ISO"
 }
