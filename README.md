@@ -27,7 +27,7 @@ This is based on the good work done in the repo: https://github.com/istepaniuk/d
 ### Building your own image:
 RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.2.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
 
-1. Install the dependencies: make libarchive-tools cpio xorriso curl
+1. Install the dependencies: make, bsdtar(libarchive-tools), cpio, xorriso and curl
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.

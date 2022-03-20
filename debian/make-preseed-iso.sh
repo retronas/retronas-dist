@@ -61,7 +61,7 @@ function generate_new_iso_and_cleanup() {
 
   chmod +w isofiles/isolinux/isolinux.bin
   xorriso -as mkisofs -r \
-    -V 'Retronas' \
+    -V 'RetroNAS Debian' \
     -o "$new_iso" \
     -J -joliet-long \
     -cache-inodes \
