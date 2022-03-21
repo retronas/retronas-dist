@@ -21,7 +21,7 @@ build-debian-amd64: download-debian-amd64 make-dists## Build the 64 bit debian i
 
 build-debian: build-debian-i386 build-debian-amd64 ## Build for all debian architectures
 
-build-all: build-debian-i386 build-debian-amd64 ## Build for all distributions
+build-all: build-debian ## Build for all distributions
 
 clear-cache: ## Remove all temporary and cached files, not including built dist ISOs
 	rm -rf debian/isofiles
