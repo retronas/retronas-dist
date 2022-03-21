@@ -1,1 +1,3 @@
 *.iso
+debian/isofiles/
+debian/mbr_template.bin

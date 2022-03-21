@@ -12,6 +12,7 @@ function check_for_iso {
 }
 
 function download_iso {
+  mkdir -p iso-cache
   URL="https://cdimage.debian.org/debian-cd/current/$1/iso-cd/debian-$2-$1-netinst.iso"
   echo "Downloading from: $URL"
   curl -L $URL --output iso-cache/debian-$2-$1-netinst.iso
