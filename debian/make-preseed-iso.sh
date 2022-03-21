@@ -57,7 +57,6 @@ function generate_new_iso_and_cleanup() {
   local new_iso="$2"
 
   echo "Generating new iso: $new_iso..."
-  mkdir -p ../dists
   dd if="$orig_iso" bs=1 count=432 of=mbr_template.bin
 
   chmod +w isofiles/isolinux/isolinux.bin
