@@ -27,18 +27,5 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libarchive-tools cpio xorriso curl
 
-      - name: Init
-        run: make init
-
       - name: Build iso
-        run: make build-amd64
-
-      - name: Check output iso was generated
-        id: check_iso
-        uses: andstor/file-existence-action@v1
-        with:
-          files: "dists/retronas-*-debian-{{ DEBIAN_VERSION }}-amd64-netinst.iso"
-
-      - name: Report status of file check
-        if: steps.check_iso.outputs.files_exists == 'true'
-        run: echo iso file created successfully
+        run: make build-debian-amd64
