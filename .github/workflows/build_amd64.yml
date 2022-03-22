@@ -1,0 +1,31 @@
+name: amd64 deb11 iso
+
+on:
+  push:
+    paths:
+    - '*.sh'
+    - 'preseed.cfg'
+    - 'Makefile'
+
+  pull_request:
+    paths:
+    - '*.sh'
+    - 'preseed.cfg'
+    - 'Makefile'
+    
+env: 
+  DEBIAN_VERSION: 11.2.0
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@main
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libarchive-tools cpio xorriso curl
+
+      - name: Build iso
+        run: make build-debian-amd64
