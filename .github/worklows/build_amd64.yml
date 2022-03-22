@@ -6,6 +6,12 @@ on:
     - '*.sh'
     - 'preseed.cfg'
     - 'Makefile'
+
+  pull:
+    paths:
+    - '*.sh'
+    - 'preseed.cfg'
+    - 'Makefile'
     
 env: 
   DEBIAN_VERSION: 11.2.0
