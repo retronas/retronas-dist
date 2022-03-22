@@ -6,6 +6,9 @@ on:
     - '*.sh'
     - 'preseed.cfg'
     - 'Makefile'
+    
+env: 
+  DEBIAN_VERSION: 11.2.0
 
 jobs:
   build-linux:
@@ -22,6 +25,14 @@ jobs:
         run: make init
 
       - name: Build iso
-        env: 
-          DEBIAN_VERSION: 11.2.0
         run: make build-amd64
+
+      - name: Check output iso was generated
+        id: check_iso
+        uses: andstor/file-existence-action@v1
+        with:
+          files: "dists/retronas-*-debian-{{ DEBIAN_VERSION }}-amd64-netinst.iso"
+
+      - name: Report status of file check
+        if: steps.check_iso.outputs.files_exists == 'true'
+        run: echo iso file created successfully
