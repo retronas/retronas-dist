@@ -7,7 +7,7 @@ on:
     - 'preseed.cfg'
     - 'Makefile'
 
-  pull:
+  pull_request:
     paths:
     - '*.sh'
     - 'preseed.cfg'
