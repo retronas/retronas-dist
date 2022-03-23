@@ -13,9 +13,6 @@ on:
     - 'preseed.cfg'
     - 'Makefile'
     
-env: 
-  DEBIAN_VERSION: 11.2.0
-
 jobs:
   build-linux:
     runs-on: ubuntu-latest
