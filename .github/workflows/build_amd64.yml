@@ -6,7 +6,7 @@ on:
     - '*.sh'
     - 'preseed.cfg'
     - 'Makefile'
-    - 'build_*.yml;
+    - 'build_*.yml'
 
   pull_request:
     paths:
