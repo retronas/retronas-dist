@@ -6,7 +6,7 @@ set -e
 
 function extract_iso() {
   echo "Extracting iso: $1..."
-  rm -rf isofiles
+  [ -d isofiles ] && sudo rm -rf isofiles
   mkdir isofiles
   bsdtar -C isofiles -xf "$1"
 }
