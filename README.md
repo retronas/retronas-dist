@@ -31,23 +31,22 @@ RetroNAS intends to maintain a release for whatever the current stable version o
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-5. Run "make init" to build the docker container and perform initial setup.
 6. Open the DEBIAN_VERSION file and change it to whatever version you'd like.
 7. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
-8. Run the make command for the architecture you desire (example: "make build-amd64") or "make build-all" to build for all architectures.
+8. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
 9. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
 
 ## How it works:
 
-The Makefile just runs the bash scripts in the repo with different arguments depending on what you want to do. Different distributions are split up into their own directories.
+The Makefile runs the bash scripts in the repo with different arguments depending on what you want to do. Different distributions are split up into their own directories.
 
 Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory. 
 
 ### Debian
 
-After the ISO is downloaded, the build command is run for the specified architecture. The iso iss unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd  handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
+After the ISO is downloaded, the build command is run for the specified architecture. The iso is unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd  handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
 
-The directory "isofiles" is then packed back up into a new RetroNAS image that you can boot.
+The directory "isofiles" is then packed into a new RetroNAS image that you can boot.
 
 When the ISO is booted, the debian installer finds the preseed.cfg file, which feeds it answers to all the questions that would normally require user input. At the end, it runs the "d-i preseed/late_command" from the end of the preseed.cfg file. This performs some configuration, and downloads the install_retronas.sh script from the main RetroNAS repo, then runs it. By using this method we asure that you always get the most up to date version of RetroNAS when using this ISO,
 and we don't have to create a new ISO each time RetroNAS is updated.

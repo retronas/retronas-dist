@@ -1,10 +1,7 @@
 .DEFAULT_GOAL := help
 DEBIAN_VERSION=$(shell cat debian/DEBIAN_VERSION)
 
-LOCAL_DIR = $(shell pwd)
-
-
-make-dists: ## Make the directory where the preseeded distrobution images will end up
+make-dists: ## Make the directory where the preseeded distribution images will end up
 	mkdir -p dists
 
 download-debian-i386: ## Download the 32 bit debian netinst image
