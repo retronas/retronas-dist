@@ -31,7 +31,7 @@ RetroNAS intends to maintain a release for whatever the current stable version o
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-6. Open the DEBIAN_VERSION file and change it to whatever version you'd like.
+6. Set the version of Debian you want in an environment variable like: export DEBIAN_VERSION=11.2.0
 7. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
 8. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
 9. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
