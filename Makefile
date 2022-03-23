@@ -1,5 +1,4 @@
 .DEFAULT_GOAL := help
-DEBIAN_VERSION=$(shell cat debian/DEBIAN_VERSION)
 
 make-dists: ## Make the directory where the preseeded distribution images will end up
 	mkdir -p dists
