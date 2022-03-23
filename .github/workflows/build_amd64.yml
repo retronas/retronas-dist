@@ -3,17 +3,17 @@ name: amd64 deb11 iso
 on:
   push:
     paths:
-    - '*.sh'
-    - 'preseed.cfg'
+    - 'debian/*.sh'
+    - 'debian/preseed.cfg'
     - 'Makefile'
-    - 'build_*.yml'
+    - '.github/workflows/build_*.yml'
 
   pull_request:
     paths:
-    - '*.sh'
+    - 'debian/*.sh'
     - 'preseed.cfg'
     - 'Makefile'
-    - 'build_*.yml'
+    - '.github/workflows/build_*.yml'
     
 jobs:
   build-linux:
