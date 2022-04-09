@@ -6,6 +6,7 @@ set -e
 
 function extract_iso() {
   echo "Extracting iso: $1..."
+  [ -d isofiles ] && echo "Removing temp files. This must be done as root" && sudo rm -rf isofiles
   mkdir isofiles
   bsdtar -C isofiles -xf "$1"
 }

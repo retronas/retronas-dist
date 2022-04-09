@@ -1,5 +1,11 @@
 .DEFAULT_GOAL := help
 
+ifdef DEBIAN_VERSION
+	DEBIAN_VERSION = $(DEBIAN_VERSION)
+else
+	DEBIAN_VERSION = 11.2.0
+endif
+
 make-dists: ## Make the directory where the preseeded distribution images will end up
 	mkdir -p dists
 
