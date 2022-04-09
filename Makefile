@@ -3,7 +3,7 @@
 ifdef DEBIAN_VERSION
 	DEBIAN_VERSION = $(DEBIAN_VERSION)
 else
-	DEBIAN_VERSION = 11.2.0
+	DEBIAN_VERSION = 11.3.0
 endif
 
 make-dists: ## Make the directory where the preseeded distribution images will end up
@@ -34,9 +34,15 @@ rpios-build: ## Build with packer in docker
 			-v $(shell pwd):/build \
 			--workdir=/build \
 			retronas:packer \
-			mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc && sudo modprobe nbd && sudo packer build rpios/retronas.json && sudo chown $(shell whoami) output-arm-image/* && mv output-arm-image/image dists/rpios.img && rm -rf output-arm-image
+			mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc && \
+			sudo modprobe nbd && \
+			sudo packer build rpios/retronas.json && \
+			sudo chown -R $(shell whoami) output-arm-image && \
+			sudo chown -R $(shell whoami) packer_cache && \
+			mv output-arm-image/image dists/rpios-$(shell date +%F).img && \
+			rm -rf output-arm-image
 
-build-all: build-debian rpios-build ## Build for all distributions
+build-all: debian-build rpios-build ## Build for all distributions
 
 clear-cache: ## Remove all temporary and cached files, not including built dist ISOs
 	rm -rf debian/isofiles

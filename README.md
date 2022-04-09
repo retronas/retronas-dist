@@ -36,24 +36,22 @@ _Note: The configuration for the boot menu options is specific to bullseye in th
 
 ### Building your own image:
 
-RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.2.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
+RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.3.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
 
 1. Install the dependencies: bsdtar(libarchive-tools), cpio, xorriso and curl
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-5. Set the version of Debian you want in an environment variable like: export DEBIAN_VERSION=11.2.0
+5. Set the version of Debian you want in an environment variable like: export DEBIAN_VERSION=11.3.0
 6. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
 7. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
 8. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
 
 ## How it works:
 
+We build debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
+
 Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
-
-### Debian
-
-This builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
 
 After the ISO is downloaded, the build command is run for the specified architecture. The iso is unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
 
@@ -64,6 +62,8 @@ and we don't have to create a new ISO each time RetroNAS is updated.
 
 # Raspberry PI OS
 
-Currently the Raspberry PI OS image is built using docker. Install docker following these instructions: https://docs.docker.com/get-docker/
+Currently the Raspberry PI OS image is built using docker. Packer is used inside docker and so the resultant image can be modified by editing the file rpios/retronas.json according to these instructions: https://www.packer.io/docs/templates/hcl_templates/syntax-json
 
-Packer is used inside docker and so the resultant image can be modified by editing the file rpios/retronas.json according to these instructions: https://www.packer.io/docs/templates/hcl_templates/syntax-json
+1. Install docker following these instructions: https://docs.docker.com/get-docker/
+2. Run "make rpios-init"
+3. Run "make rpios-build"
