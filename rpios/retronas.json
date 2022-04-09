@@ -1,0 +1,24 @@
+{
+   "variables":{
+      
+   },
+   "builders":[
+      {
+         "type":"arm-image",
+         "iso_url":"https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2022-01-28/2022-01-28-raspios-bullseye-armhf-lite.zip",
+         "iso_checksum":"sha256:f6e2a3e907789ac25b61f7acfcbf5708a6d224cf28ae12535a2dc1d76a62efbc",
+         "target_image_size":2147483648,
+         "image_mounts": ["/boot", "/"]
+      }
+   ],
+   "provisioners":[
+      {
+         "type":"shell",
+         "inline":[
+            "curl 'https://raw.githubusercontent.com/danmons/retronas/main/install_retronas.sh' --output /tmp/install_retronas.sh",
+            "chmod a+x /tmp/install_retronas.sh",
+            "/tmp/install_retronas.sh"
+         ]
+      }
+   ]
+}
