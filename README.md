@@ -62,8 +62,7 @@ and we don't have to create a new ISO each time RetroNAS is updated.
 
 # Raspberry PI OS
 
-Currently the Raspberry PI OS image is built using docker. Packer is used inside docker and so the resultant image can be modified by editing the file rpios/retronas.json according to these instructions: https://www.packer.io/docs/templates/hcl_templates/syntax-json
+If you want to use your own raspios img file, create the directory rpios/iso-cache and put the img file inside.
 
-1. Install docker following these instructions: https://docs.docker.com/get-docker/
-2. Run "make rpios-init"
-3. Run "make rpios-build"
+1. Install qemu qemu-user-static binfmt-support
+2. Run "make rpios-build"
