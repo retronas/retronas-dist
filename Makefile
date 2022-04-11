@@ -27,20 +27,7 @@ rpios-init: ## Set up docker container for packer
 	cd rpios && docker build -t retronas:packer .
 
 rpios-build: ## Build with packer in docker
-		docker run \
-			-it \
-			--rm \
-			--privileged \
-			-v $(shell pwd):/build \
-			--workdir=/build \
-			retronas:packer \
-			mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc && \
-			sudo modprobe nbd && \
-			sudo packer build rpios/retronas.json && \
-			sudo chown -R $(shell whoami) output-arm-image && \
-			sudo chown -R $(shell whoami) packer_cache && \
-			mv output-arm-image/image dists/rpios-$(shell date +%F).img && \
-			rm -rf output-arm-image
+	cd rpios && ./build.sh
 
 build-all: debian-build rpios-build ## Build for all distributions
 
@@ -49,6 +36,7 @@ clear-cache: ## Remove all temporary and cached files, not including built dist 
 	rm debian/iso-cache/*
 	rm -rf packer_cache
 	rm -rf output-arm-image
+	rm rpios/iso-cache/*
 
 help: ## Show this help.
 	@grep -E '^[a-zA-Z1-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

@@ -1,4 +1,6 @@
 *.iso
+*.img
+*.zip
 debian/isofiles/
 debian/mbr_template.bin
 output-arm-image
