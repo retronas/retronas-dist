@@ -34,7 +34,7 @@ RetroNAS intends to maintain a release for whatever the current stable version o
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-5. If you want to use a specific version of debian then download the netinst cd image for that version and architecture: https://www.debian.org/releases/
+5. If you want to use a specific version of debian then download the netinst cd image for that version and architecture: https://www.debian.org/releases Create a directory at debian/iso-cache and put the iso inside.
 6. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
 7. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
 8. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
