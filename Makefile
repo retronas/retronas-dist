@@ -1,25 +1,19 @@
 .DEFAULT_GOAL := help
 
-ifdef DEBIAN_VERSION
-	DEBIAN_VERSION = $(DEBIAN_VERSION)
-else
-	DEBIAN_VERSION = 11.2.0
-endif
-
 make-dists: ## Make the directory where the preseeded distribution images will end up
 	mkdir -p dists
 
 download-debian-i386: ## Download the 32 bit debian netinst image
-	cd debian && ./download-iso.sh i386 $(DEBIAN_VERSION)
+	cd debian && ./download-iso.sh i386
 
 build-debian-i386: download-debian-i386 make-dists## Build the 32 bit debian image in the docker container
-	cd debian && ./make-preseed-iso.sh iso-cache/debian-$(DEBIAN_VERSION)-i386-netinst.iso retronas-debian-$(DEBIAN_VERSION)-i386-netinst.iso 386
+	cd debian && ./make-preseed-iso.sh iso-cache/$(notdir $(shell ls debian/iso-cache/debian-*-i386-netinst.iso | head -1)) 386
 
 download-debian-amd64: ## Download the 32 bit debian netinst image
-	cd debian && ./download-iso.sh amd64 $(DEBIAN_VERSION)
+	cd debian && ./download-iso.sh amd64
 
 build-debian-amd64: download-debian-amd64 make-dists## Build the 64 bit debian image in the docker container
-	cd debian && ./make-preseed-iso.sh iso-cache/debian-$(DEBIAN_VERSION)-amd64-netinst.iso retronas-debian-$(DEBIAN_VERSION)-amd64-netinst.iso amd
+	cd debian && ./make-preseed-iso.sh iso-cache/$(notdir $(shell ls debian/iso-cache/debian-*-amd64-netinst.iso | head -1)) amd
 
 build-debian: build-debian-i386 build-debian-amd64 ## Build for all debian architectures
 
