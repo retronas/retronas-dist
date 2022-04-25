@@ -55,7 +55,6 @@ function recompute_md5_checksum() {
 
 function generate_new_iso_and_cleanup() {
   local orig_iso="$1"
-  local new_iso="$2"
 
   echo "Generating new iso: $new_iso..."
   dd if="$orig_iso" bs=1 count=432 of=mbr_template.bin
@@ -82,7 +81,7 @@ function generate_new_iso_and_cleanup() {
 
 orig_iso="$1"
 new_iso="../dists/retronas-$(date +%F)-$(basename $orig_iso)"
-arch="$3"
+arch="$2"
 extract_iso "$orig_iso"
 add_preseed_to_initrd "$arch"
 make_auto_the_default_isolinux_boot_option

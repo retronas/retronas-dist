@@ -1,15 +1,17 @@
 # RetroNAS Distribution Generator
+
 This is a companion repo to https://github.com/danmons/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
 
 ### WARNING: YOU WILL LOSE ALL YOUR DATA
 
-The preseeded installer ***completely erases the first disk*** on the computer you install this to. DO NOT use this on any device that could have the slightest possibility of containing any data you want to retain because it will be immediately erased without asking you. Boot it up and look through the filesystem beforehand to make sure. ***By booting this image at all you agree to having your data erased***.
+The preseeded installer **_completely erases the first disk_** on the computer you install this to. DO NOT use this on any device that could have the slightest possibility of containing any data you want to retain because it will be immediately erased without asking you. Boot it up and look through the filesystem beforehand to make sure. **_By booting this image at all you agree to having your data erased_**.
 
 This is based on the good work done in the repo: https://github.com/istepaniuk/debian11-preseed and the RetroNAS team would very much like to thank its creator Iván Stepaniuk (istepaniuk) for it.
 
 ## Usage:
 
 ### Installing a RetroNAS Distribution:
+
 1. Download an ISO for your architecture from the releases (i386 for 32 bit and amd64 for 64 bit).
 2. Flash the ISO to a USB stick (https://www.balena.io/etcher/) or burn it to a CD. (You could also use a virtual machine)
 3. Connect the computer you wish to use to the internet with an ethernet cable.
@@ -22,29 +24,30 @@ This is based on the good work done in the repo: https://github.com/istepaniuk/d
 10. You can login to debian with the username "pi" and password "retronas". The root password is also "retronas".
 11. Type "retronas" and press enter to run RetroNAS.
 
-*Note: The configuration for the boot menu options is specific to bullseye in the case of a UEFI system because grub uses the position of the entry to specify the default option.*
+_Note: The configuration for the boot menu options is specific to bullseye in the case of a UEFI system because grub uses the position of the entry to specify the default option._
 
 ### Building your own image:
+
 RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.2.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
 
 1. Install the dependencies: make, bsdtar(libarchive-tools), cpio, xorriso and curl
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-6. Set the version of Debian you want in an environment variable like: export DEBIAN_VERSION=11.2.0
-7. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
-8. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
-9. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
+5. If you want to use a specific version of debian then download the netinst cd image for that version and architecture: https://www.debian.org/releases Create a directory at debian/iso-cache and put the iso inside.
+6. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
+7. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
+8. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
 
 ## How it works:
 
 The Makefile runs the bash scripts in the repo with different arguments depending on what you want to do. Different distributions are split up into their own directories.
 
-Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory. 
+Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
 
 ### Debian
 
-After the ISO is downloaded, the build command is run for the specified architecture. The iso is unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd  handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
+After the ISO is downloaded, the build command is run for the specified architecture. The iso is unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
 
 The directory "isofiles" is then packed into a new RetroNAS image that you can boot.
 
