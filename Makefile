@@ -12,21 +12,18 @@ make-dists: ## Make the directory where the preseeded distribution images will e
 debian-download-i386: ## Download the 32 bit debian netinst image
 	cd debian && ./download-iso.sh i386 $(DEBIAN_VERSION)
 
-debian-build-i386: debian-download-i386 make-dists## Build the 32 bit debian image in the docker container
+debian-build-i386: debian-download-i386 make-dists## Build the 32 bit debian image
 	cd debian && ./make-preseed-iso.sh iso-cache/debian-$(DEBIAN_VERSION)-i386-netinst.iso retronas-debian-$(DEBIAN_VERSION)-i386-netinst.iso 386
 
 debian-download-amd64: ## Download the 32 bit debian netinst image
 	cd debian && ./download-iso.sh amd64 $(DEBIAN_VERSION)
 
-debian-build-amd64: debian-download-amd64 make-dists## Build the 64 bit debian image in the docker container
+debian-build-amd64: debian-download-amd64 make-dists## Build the 64 bit debian image
 	cd debian && ./make-preseed-iso.sh iso-cache/debian-$(DEBIAN_VERSION)-amd64-netinst.iso retronas-debian-$(DEBIAN_VERSION)-amd64-netinst.iso amd
 
 debian-build: debian-build-i386 debian-build-amd64 ## Build for all debian architectures
 
-rpios-init: ## Set up docker container for packer
-	cd rpios && docker build -t retronas:packer .
-
-rpios-build: ## Build with packer in docker
+rpios-build: ## Build rpios image
 	cd rpios && ./build.sh
 
 build-all: debian-build rpios-build ## Build for all distributions
