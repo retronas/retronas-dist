@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 function check_for_iso {
   for file in $(pwd)/iso-cache/*; do
       local FILENAME=$(basename $file)
