@@ -1,6 +1,6 @@
 # RetroNAS Distribution Generator
 
-This is a companion repo to https://github.com/danmons/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
+This is a companion repo to https://github.com/retronas/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
 
 ### WARNING: YOU WILL LOSE ALL YOUR DATA
 
