@@ -29,4 +29,4 @@ jobs:
           sudo apt-get install -y libarchive-tools cpio xorriso curl
 
       - name: Build iso
-        run: make debian-build-amd64
+        run: make build-debian-amd64
