@@ -14,7 +14,9 @@ on:
     - 'preseed.cfg'
     - 'Makefile'
     - '.github/workflows/build_*.yml'
-    
+
+  workflow_dispatch:
+
 jobs:
   build-linux:
     runs-on: ubuntu-latest
