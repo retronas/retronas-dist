@@ -1,14 +1,6 @@
 # RetroNAS Distribution Generator
 
-This is a companion repo to https://github.com/danmons/retronas that builds all the distributions of RetroNAS for different platforms. The configuration for each distribution has its own directory and this documentation is broken up by distribution as well.
-
-All the relevant commands can be found by running make. The make commands have prefixes for their distributions, such as debian-build and rpios-build. They are oriented hierarchically so that all the distributions have a single build command that will build everything for that distribution and there is a build-all command that will build every distributions. Built distributions can be found in the dists directory.
-
-Make is the main dependency, and each distribution will have its individual dependencies listed in its section.
-
-# Debian
-
-This builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
+This is a companion repo to https://github.com/retronas/retronas that builds debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
 
 ### WARNING: YOU WILL LOSE ALL YOUR DATA
 
@@ -36,20 +28,24 @@ _Note: The configuration for the boot menu options is specific to bullseye in th
 
 ### Building your own image:
 
+RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.2.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
+
 RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.3.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
 
 1. Install the dependencies: bsdtar(libarchive-tools), cpio, xorriso and curl
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
-5. Set the version of Debian you want in an environment variable like: export DEBIAN_VERSION=11.3.0
+5. If you want to use a specific version of debian then download the netinst cd image for that version and architecture: https://www.debian.org/releases Create a directory at debian/iso-cache and put the iso inside.
 6. Edit the preseed file however you'd like (https://wiki.debian.org/DebianInstaller/Preseed)
 7. Run the make command for the architecture you desire (example: "make build-debian-amd64") or "make build-all" to build for all architectures.
 8. After building, your ISO(s) will be written to the dists directory and prepended with the name "retronas" and the date.
 
 ## How it works:
 
-We build debian ISO's with customized installers. These are net installers that result in an operating system pre-configured with RetroNAS. Essentially it allows you to turn any standard PC or laptop into a dedicated RetroNAS box without having to do any manual pre-configuration.
+The Makefile runs the bash scripts in the repo with different arguments depending on what you want to do. Different distributions are split up into their own directories.
+
+Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
 
 Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
 
