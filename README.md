@@ -30,7 +30,9 @@ _Note: The configuration for the boot menu options is specific to bullseye in th
 
 RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.2.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
 
-1. Install the dependencies: make, bsdtar(libarchive-tools), cpio, xorriso and curl
+RetroNAS intends to maintain a release for whatever the current stable version of Debian is. At the time of this writing, that's Bullseye 11.3.0. If, however, you wish to build an installer with a different version, or to edit the preseed, the procedure is quite simple:
+
+1. Install the dependencies: bsdtar(libarchive-tools), cpio, xorriso and curl
 2. Clone this repo.
 3. Navigate to the retronas-dist directory.
 4. Run "make" to see a list of available procedures.
@@ -45,7 +47,7 @@ The Makefile runs the bash scripts in the repo with different arguments dependin
 
 Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
 
-### Debian
+Every build command has as its dependency a download command. This just looks for the ISO for the specific architecture and version in the appropriate iso-cache directory. If it finds it, then this step is skipped. If not, it downloads the appropriate ISO to that dist's iso-cache directory.
 
 After the ISO is downloaded, the build command is run for the specified architecture. The iso is unpacked into a temporary directory called isofiles. The file "preseed.cfg" is then injected into that ISO's initrd file. Initrd handles the installation of Debian. During the installation it always looks for a file named preseed.cfg for configuration, but it usually doesn't exist so it just performs its default behavior.
 
@@ -53,3 +55,10 @@ The directory "isofiles" is then packed into a new RetroNAS image that you can b
 
 When the ISO is booted, the debian installer finds the preseed.cfg file, which feeds it answers to all the questions that would normally require user input. At the end, it runs the "d-i preseed/late_command" from the end of the preseed.cfg file. This performs some configuration, and downloads the install_retronas.sh script from the main RetroNAS repo, then runs it. By using this method we asure that you always get the most up to date version of RetroNAS when using this ISO,
 and we don't have to create a new ISO each time RetroNAS is updated.
+
+# Raspberry PI OS
+
+If you want to use your own raspios img file, create the directory rpios/iso-cache and put the img file inside.
+
+1. Install qemu qemu-user-static binfmt-support
+2. Run "make rpios-build"
