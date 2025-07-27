@@ -40,5 +40,5 @@ jobs:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: |
             rpios/tmp/*arm64-lite.img.xz
-          compression: 0
+          compression-level: 0
           if-no-files-found: error
