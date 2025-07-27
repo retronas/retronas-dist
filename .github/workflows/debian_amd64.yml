@@ -29,3 +29,10 @@ jobs:
 
       - name: Build iso
         run: make build-debian-amd64
+
+      - uses: actions/upload-artifact@main
+        with:
+          name: retronas-debian-amd64-${{ github.sha }}
+          path: |
+            tmp/*.iso
+          if-no-files-found: error

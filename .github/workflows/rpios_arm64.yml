@@ -29,3 +29,10 @@ jobs:
 
       - name: Build image
         run: make build-rpios-arm64
+
+      - uses: actions/upload-artifact@main
+        with:
+          name: retronas-rpios-arm64-${{ github.sha }}
+          path: |
+            retronas*.iso
+          if-no-files-found: error
