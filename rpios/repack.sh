@@ -41,7 +41,7 @@ then
   sudo umount ${DMNT}
   sudo losetup -d $LOOP_DEVICE
 
-  mv tmp/$EXISTING_RPIOS_IMG ../dists/retronas-$EXISTING_RPIOS_IMG
+  #mv tmp/$EXISTING_RPIOS_IMG ../dists/retronas-$EXISTING_RPIOS_IMG
   #rm -rf tmp
 
 else
