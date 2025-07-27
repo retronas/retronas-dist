@@ -6,3 +6,5 @@ debian/mbr_template.bin
 output-arm-image
 packer_cache
 dists
+rpios/mnt
+rpios/tmp

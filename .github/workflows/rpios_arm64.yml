@@ -1,0 +1,31 @@
+---
+name: rpios arm64
+
+on:
+  push:
+    paths:
+    - 'rpios/*'
+    - 'Makefile'
+    - '.github/workflows/build_arm64.yml'
+
+  pull_request:
+    paths:
+    - 'rpios/*'
+    - 'Makefile'
+    - '.github/workflows/build_arm64.yml'
+
+  workflow_dispatch:
+
+jobs:
+  build-arm64:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@main
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget curl qemu-user-static binfmt-support
+
+      - name: Build image
+        run: make build-rpios-arm64

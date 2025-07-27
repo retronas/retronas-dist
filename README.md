@@ -60,5 +60,5 @@ and we don't have to create a new ISO each time RetroNAS is updated.
 
 If you want to use your own raspios img file, create the directory rpios/iso-cache and put the img file inside.
 
-1. Install qemu qemu-user-static binfmt-support
-2. Run "make rpios-build"
+1. Install qemu-user-static binfmt-support
+2. Run "make build-rpios-arm64"

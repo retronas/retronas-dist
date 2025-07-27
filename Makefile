@@ -6,21 +6,28 @@ make-dists: ## Make the directory where the preseeded distribution images will e
 download-debian-i386: ## Download the 32 bit debian netinst image
 	cd debian && ./download-iso.sh i386
 
-build-debian-i386: download-debian-i386 make-dists## Build the 32 bit debian image in the docker container
+build-debian-i386: download-debian-i386 make-dists ## Build the 32 bit debian image in the docker container
 	cd debian && ./make-preseed-iso.sh iso-cache/$(notdir $(shell ls debian/iso-cache/debian-*-i386-netinst.iso | head -1)) 386
 
 download-debian-amd64: ## Download the 32 bit debian netinst image
 	cd debian && ./download-iso.sh amd64
 
-build-debian-amd64: download-debian-amd64 make-dists## Build the 64 bit debian image in the docker container
+build-debian-amd64: download-debian-amd64 make-dists ## Build the 64 bit debian image in the docker container
 	cd debian && ./make-preseed-iso.sh iso-cache/$(notdir $(shell ls debian/iso-cache/debian-*-amd64-netinst.iso | head -1)) amd
 
-debian-build: debian-build-i386 debian-build-amd64 ## Build for all debian architectures
+build-debian: build-debian-i386 build-debian-amd64 ## build for all debian architectures
 
-rpios-build: ## Build rpios image
-	cd rpios && ./build.sh
+build-rpios-armhf: ## Build rpios image
+	cd rpios && ./build_armhf.sh
 
-build-all: debian-build rpios-build ## Build for all distributions
+build-rpios-arm64: ## Build rpios image
+	cd rpios && ./build_arm64.sh
+
+build-rpios: build-rpios-armhf build-rpios-amd64
+
+build-all: 
+	build-debian
+	build-rpios
 
 clear-cache: ## Remove all temporary and cached files, not including built dist ISOs
 	rm -rf debian/isofiles
