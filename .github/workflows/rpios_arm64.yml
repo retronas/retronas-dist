@@ -34,5 +34,5 @@ jobs:
         with:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: |
-            rpios/tmp/*img
+            rpios/tmp/*arm64-lite.img
           if-no-files-found: error

@@ -37,6 +37,15 @@ then
   sudo chroot ${DMNT} /tmp/install.sh
   #sudo sed -i 's/^#//g' /mnt/etc/ld.so.preload
 
+  # add our retronas user
+  export OLDRNUSER=retronas
+  export RNPASSWD=retronas
+  sudo chroot ${DMNT} useradd -m -s /bin/bash $OLDRNUSER
+  echo "$OLDRNUSER ALL=(ALL) NOPASSWD:ALL" | sudo chroot ${DMNT} tee /etc/sudoers.d/${OLDRNUSER}
+  sudo chroot ${DMNT} chmod 440 /etc/sudoers.d/${OLDRNUSER}
+  echo -e "${RNPASSWD}\n${RNPASSWD}" | sudo chroot ${DMNT} passwd $OLDNUSER
+
+
   sudo rm -f ${DMNT}/usr/bin/qemu-*
   sudo umount ${DMNT}
   sudo losetup -d $LOOP_DEVICE
