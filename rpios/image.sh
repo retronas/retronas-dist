@@ -25,8 +25,6 @@ function uncompress {
   done
 }
 
-set -x
-
 function download {
   if [ -z $EXISTING_RPIOS_IMG ]
   then
