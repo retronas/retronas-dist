@@ -34,5 +34,5 @@ jobs:
         with:
           name: retronas-debian-amd64-${{ github.sha }}
           path: |
-            tmp/*.iso
+            retronas*.iso
           if-no-files-found: error
