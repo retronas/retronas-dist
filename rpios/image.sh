@@ -19,10 +19,13 @@ function uncompress {
         cd iso-cache
         xz --decompress $FILENAME
         cd ..
+        check $1
         break
       fi
   done
 }
+
+set -x
 
 function download {
   if [ -z $EXISTING_RPIOS_IMG ]
