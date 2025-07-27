@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xz wget curl qemu-user-static binfmt-support
+          sudo apt-get install -y xz-utils wget curl qemu-user-static binfmt-support
 
       - name: Build image
         run: make build-rpios-arm64
