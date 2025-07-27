@@ -6,13 +6,13 @@ on:
     paths:
     - 'rpios/*'
     - 'Makefile'
-    - '.github/workflows/build_arm64.yml'
+    - '.github/workflows/rpios_arm64.yml'
 
   pull_request:
     paths:
     - 'rpios/*'
     - 'Makefile'
-    - '.github/workflows/build_arm64.yml'
+    - '.github/workflows/rpios_arm64.yml'
 
   workflow_dispatch:
 

@@ -6,13 +6,13 @@ on:
     paths:
     - 'debian/*'
     - 'Makefile'
-    - '.github/workflows/build_amd64.yml'
+    - '.github/workflows/debian_amd64.yml'
 
   pull_request:
     paths:
     - 'debian/*'
     - 'Makefile'
-    - '.github/workflows/build_amd64.yml'
+    - '.github/workflows/debian_amd64.yml'
 
   workflow_dispatch:
 
@@ -34,5 +34,5 @@ jobs:
         with:
           name: retronas-debian-amd64-${{ github.sha }}
           path: |
-            retronas.*amd64-netinst.iso
+            debian/retronas.*amd64-netinst.iso
           if-no-files-found: error
