@@ -30,9 +30,15 @@ jobs:
       - name: Build iso
         run: make build-debian-amd64
 
+      - name: Compress Image
+        run: |
+          cd debian
+          xz -z -6 retronas*amd64-netinst.is
+
       - uses: actions/upload-artifact@main
         with:
           name: retronas-debian-amd64-${{ github.sha }}
           path: |
-            debian/retronas*amd64-netinst.iso
+            debian/retronas*amd64-netinst.iso.xz
+          compression-level: 0
           if-no-files-found: error
