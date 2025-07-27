@@ -33,7 +33,7 @@ jobs:
       - name: Compress Image
         run: |
           cd debian
-          xz -z -6 retronas*amd64-netinst.is
+          xz -z -6 retronas*amd64-netinst.iso
 
       - uses: actions/upload-artifact@main
         with:
