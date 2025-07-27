@@ -25,14 +25,20 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget curl qemu-user-static binfmt-support
+          sudo apt-get install -y xz wget curl qemu-user-static binfmt-support
 
       - name: Build image
         run: make build-rpios-arm64
+
+      - name: Compress Image
+        run: |
+          cd rpios/tmp
+          xz -z -6 *arm64-lite.img
 
       - uses: actions/upload-artifact@main
         with:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: |
-            rpios/tmp/*arm64-lite.img
+            rpios/tmp/*arm64-lite.img.xz
+          compression: 0
           if-no-files-found: error
