@@ -4,15 +4,17 @@ name: rpios arm64
 on:
   push:
     paths:
-    - 'rpios/*'
-    - 'Makefile'
-    - '.github/workflows/rpios_arm64.yml'
+      - 'rpios/*'
+      - 'Makefile'
+      - '.github/workflows/rpios_arm64.yml'
+    tags:
+      - "*"
 
   pull_request:
     paths:
-    - 'rpios/*'
-    - 'Makefile'
-    - '.github/workflows/rpios_arm64.yml'
+      - 'rpios/*'
+      - 'Makefile'
+      - '.github/workflows/rpios_arm64.yml'
 
   workflow_dispatch:
 
@@ -42,3 +44,10 @@ jobs:
             rpios/tmp/*arm64-lite.img.xz
           compression-level: 0
           if-no-files-found: error
+
+
+      - uses: softprops/action-gh-release
+        if: github.ref_type == 'tag'
+        with:
+          files:
+            rpios/tmp/*arm64-lite.img.xz
