@@ -63,4 +63,3 @@ jobs:
         with:
           files:
             rpios/tmp/*arm64-lite.img.xz
-        if-no-files-found: error
