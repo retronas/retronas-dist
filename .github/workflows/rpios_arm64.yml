@@ -3,18 +3,18 @@ name: rpios arm64
 
 on:
   push:
-    paths:
-      - 'rpios/*'
-      - 'Makefile'
-      - '.github/workflows/rpios_arm64.yml'
+    #paths:
+    #  - 'rpios/*'
+    #  - 'Makefile'
+    #  - '.github/workflows/rpios_arm64.yml'
     tags:
       - "*"
 
   pull_request:
-    paths:
-      - 'rpios/*'
-      - 'Makefile'
-      - '.github/workflows/rpios_arm64.yml'
+    #paths:
+    #  - 'rpios/*'
+    #  - 'Makefile'
+    #  - '.github/workflows/rpios_arm64.yml'
 
   workflow_dispatch:
 
@@ -32,27 +32,37 @@ jobs:
       - name: Build image
         run: make build-rpios-arm64
 
-      - name: Compress Image
-        run: |
-          cd rpios/tmp
-          xz -z -6 *arm64-lite.img
-
       - uses: actions/upload-artifact@main
         with:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: |
             rpios/tmp/*arm64-lite.img.xz
-          compression-level: 0
           if-no-files-found: error
 
+      - name: Download Artifact
+        if: github.ref_type == 'tag'
+        uses: actions/download-artifact@v2
+        with:
+          name: retronas-rpios-arm64-${{ github.sha }}
+          path: rpios/tmp
+
       - name: Uncompress Artifact
+        if: github.ref_type == 'tag'
         run: |
           cd rpios/tmp
-          unzip -d rpios/tmp retronas-rpios-arm64-${{ github.sha }}.zip
+          unzip retronas-rpios-arm64-${{ github.sha }}.zip
+        if-no-files-found: error
 
+      - name: Compress Image
+        if: github.ref_type == 'tag'
+        run: |
+          cd rpios/tmp
+          xz -z -6 *arm64-lite.img
+        if-no-files-found: error
 
       - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
           files:
             rpios/tmp/*arm64-lite.img.xz
+        if-no-files-found: error
