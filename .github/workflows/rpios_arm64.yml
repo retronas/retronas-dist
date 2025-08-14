@@ -41,7 +41,7 @@ jobs:
 
       - name: Download Artifact
         if: github.ref_type == 'tag'
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@main
         with:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: rpios/tmp
