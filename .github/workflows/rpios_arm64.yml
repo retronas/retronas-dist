@@ -51,14 +51,12 @@ jobs:
         run: |
           cd rpios/tmp
           unzip retronas-rpios-arm64-${{ github.sha }}.zip
-        if-no-files-found: error
 
       - name: Compress Image
         if: github.ref_type == 'tag'
         run: |
           cd rpios/tmp
           xz -z -6 *arm64-lite.img
-        if-no-files-found: error
 
       - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
