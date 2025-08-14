@@ -36,7 +36,8 @@ jobs:
         with:
           name: retronas-rpios-arm64-${{ github.sha }}
           path: |
-            rpios/tmp/*arm64-lite.img.xz
+            rpios/tmp/*arm64-lite.img
+          overwrite: true
           if-no-files-found: error
 
       - name: Download Artifact
