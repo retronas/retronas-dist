@@ -44,22 +44,20 @@ jobs:
         uses: actions/download-artifact@main
         with:
           name: retronas-rpios-arm64-${{ github.sha }}.zip
-          path: rpios/tmp/retronas-rpios-arm64-${{ github.sha }}.zip
+          path: retronas-rpios-arm64-${{ github.sha }}.zip
 
       - name: Uncompress Artifact
         if: github.ref_type == 'tag'
         run: |
-          cd rpios/tmp
           unzip retronas-rpios-arm64-${{ github.sha }}.zip
 
       - name: Compress Image
         if: github.ref_type == 'tag'
         run: |
-          cd rpios/tmp
           xz -z -6 *arm64-lite.img
 
       - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
           files:
-            rpios/tmp/*arm64-lite.img.xz
+            *arm64-lite.img.xz
