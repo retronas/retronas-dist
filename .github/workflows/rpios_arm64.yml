@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/upload-artifact@main
         with:
-          name: retronas-rpios-arm64-${{ github.sha }}
+          name: retronas-rpios-arm64-${{ github.sha }}.zip
           path: |
             rpios/tmp/*arm64-lite.img
           overwrite: true
@@ -44,7 +44,7 @@ jobs:
         if: github.ref_type == 'tag'
         uses: actions/download-artifact@main
         with:
-          name: retronas-rpios-arm64-${{ github.sha }}
+          name: retronas-rpios-arm64-${{ github.sha }}.zip
           path: rpios/tmp
 
       - name: Uncompress Artifact
